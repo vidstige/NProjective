@@ -39,7 +39,10 @@ namespace KinectICP.ViewModels
             {
                 if (frame != null)
                 {
-                    _depthMapPainter.UpdateWith(frame);
+                    DepthImagePixel[] pixels = new DepthImagePixel[frame.PixelDataLength];
+                    frame.CopyDepthImagePixelDataTo(pixels);
+                    short[] buff = pixels.Select(pixel => pixel.Depth).ToArray();
+                    _depthMapPainter.UpdateWith(buff);
                 }
             }
         }

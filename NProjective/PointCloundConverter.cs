@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NProjective
 {
-    public class Class1
+    public class PointCloundConverter
     {
     }
 }

@@ -9,14 +9,12 @@ namespace KinectICP.ViewModels
     class DepthMapPainter
     {
         private readonly WriteableBitmap _bitmap = new WriteableBitmap(640, 480, 96, 96, PixelFormats.Gray16, null);
+        private const int _bitsPerByte = 8;
 
-        public void UpdateWith(DepthImageFrame frame)
+        public void UpdateWith(short[] buff)
         {
-            DepthImagePixel[] pixels = new DepthImagePixel[frame.PixelDataLength];
-            frame.CopyDepthImagePixelDataTo(pixels);
-            short[] buff = pixels.Select(pixel => (short)(32000 - pixel.Depth)).ToArray();
             var rect = new Int32Rect(0, 0, 640, 480);
-            int stride = rect.Width * _bitmap.Format.BitsPerPixel / 8;
+            int stride = rect.Width * _bitmap.Format.BitsPerPixel / _bitsPerByte;
             _bitmap.WritePixels(rect, buff, stride, 0);
         }
 
