@@ -18,7 +18,7 @@ namespace KinectICP.ViewModels
 
         public MainViewModel()
         {
-            _bitmap = new WriteableBitmap(640, 480, 96, 96, PixelFormats.Gray8, null);
+            _bitmap = new WriteableBitmap(640, 480, 96, 96, PixelFormats.Gray16, null);
         }
 
         public WriteableBitmap DepthMap
@@ -45,9 +45,9 @@ namespace KinectICP.ViewModels
                 {
                     DepthImagePixel[] pixels = new DepthImagePixel[frame.PixelDataLength];
                     frame.CopyDepthImagePixelDataTo(pixels);
-                    var buff = pixels.Select(pixel => (byte)(256-pixel.Depth / 256)).ToArray();
+                    short[] buff = pixels.Select(pixel => (short)(32000 - pixel.Depth)).ToArray();
                     var rect = new Int32Rect(0, 0, 640, 480);
-                    const int stride = 640;
+                    int stride = rect.Width * _bitmap.Format.BitsPerPixel / 8;
                     _bitmap.WritePixels(rect, buff, stride, 0);
                 }
             }
