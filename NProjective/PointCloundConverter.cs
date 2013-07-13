@@ -4,7 +4,7 @@ namespace NProjective
 {
     public class PointCloundConverter
     {
-        public IList<Point3d> Convert(short[] depthImageBuffer, int width, int height, int stride, float focalPoint)
+        public PointCloud Convert(short[] depthImageBuffer, int width, int height, int stride, float focalPoint)
         {
             List<Point3d> result = new List<Point3d>(width * height);
             
@@ -27,7 +27,7 @@ namespace NProjective
             //pointcloud.sensor_orientation_.y () = 0.0f; 
             //pointcloud.sensor_orientation_.z () = 0.0f; 
 
-            return result;
+            return new PointCloud(result);
         }
     }
 }
