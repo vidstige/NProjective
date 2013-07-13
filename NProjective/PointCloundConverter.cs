@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Media.Media3D;
 
 namespace NProjective
 {
@@ -6,9 +7,9 @@ namespace NProjective
     {
         public PointCloud Convert(short[] depthImageBuffer, int width, int height, int stride, float focalPoint)
         {
-            List<Point3d> result = new List<Point3d>(width * height);
-            
-            float constant = 1.0f / focalPoint;  // 525 for kinect
+            var result = new List<Point3D>(width * height);
+
+            double constant = 1.0f / focalPoint;  // 525 for kinect
             int depth_idx = 0; 
             int centerX = width / 2;
             int centerY = height / 2;
@@ -16,8 +17,8 @@ namespace NProjective
             {
                 for (int u = -centerX; u < centerX; u++) 
                 {
-                    float z = depthImageBuffer[depth_idx] * 0.001f;
-                    result.Add(new Point3d((float)u * z * constant, (float)v * z * constant, z));
+                    double z = depthImageBuffer[depth_idx] * 0.001f;
+                    result.Add(new Point3D((double)u * z * constant, (double)v * z * constant, z));
                     depth_idx++;
                 } 
             } 
