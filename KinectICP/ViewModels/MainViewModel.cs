@@ -1,5 +1,6 @@
 ﻿using Microsoft.Kinect;
 using NProjective;
+using NProjective.Samplers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -59,9 +60,9 @@ namespace KinectICP.ViewModels
                     short[] buff = pixels.Select(pixel => pixel.Depth).ToArray();
                     
                     //_depthMapPainter.UpdateWith(buff);
-                    if (frame.FrameNumber % 30 == 0)
+                    if (frame.FrameNumber % 1 == 0)
                     {
-                        Points = new PointCloundConverter().Convert(buff, frame.Width, frame.Height, frame.Width, 525f).Points;
+                        Points = new PointCloundConverter(new RandomSampler(2000)).Convert(buff, frame.Width, frame.Height, frame.Width, 525f).Points;
                     }
                 }
             }
